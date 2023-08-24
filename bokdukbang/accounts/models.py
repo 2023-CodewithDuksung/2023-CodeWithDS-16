@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, name, student_num=0, phone=None, password=None, **extra_fields):
+    def create_user(self, email, name=None, student_num=0, phone=None, password=None, **extra_fields):
         if not email:
             raise ValueError("The Email field must be set")
         
@@ -13,11 +13,13 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, name, student_num=0, phone=None, password=None, **extra_fields):
+    def create_superuser(self, email, name=None, student_num=0, phone=None, password=None, **extra_fields):
         superuser = self.create_user(
             email=email,
+            name = name,
+            student_num = student_num,
             password=password,
-            name=email,
+            phone = phone
         )
 
         superuser.is_staff = True
@@ -28,10 +30,10 @@ class UserManager(BaseUserManager):
         return superuser
 
 class User(AbstractBaseUser):
-    username = models.CharField(max_length=40, null=False)
+    user_id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=40, null=False)
     student_num = models.IntegerField(null=False, unique=True)
     email = models.EmailField(null=False, unique=True)
-    password = models.CharField(max_length=45, null=False)
     is_superuser = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
@@ -42,8 +44,17 @@ class User(AbstractBaseUser):
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['student_num', 'phone']
+    REQUIRED_FIELDS = ['name', 'student_num', 'phone']
 
     class Meta:
         managed = True
         db_table = 'user'
+
+    def __str__(self):
+        return f"({self.user_id}) {self.email}"
+
+    def has_perm(self, perm, obj=None):
+        return True
+
+    def has_module_perms(self, app_label):
+        return True
