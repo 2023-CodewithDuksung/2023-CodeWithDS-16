@@ -5,7 +5,6 @@ from .views import DuksungLoginView, ChooseLocationView
 app_name = 'authentication'
 urlpatterns = [
     path('login/', DuksungLoginView.as_view(), name='login'),
-    path('logout/', LogoutView.as_view(), name='logout'),
     path('logout/', LogoutView.as_view(next_page='/'), name='logout'),
-    path('chooselocation/', ChooseLocationView.as_view(), name='choose_location'),
+    path('chooselocation/', ChooseLocationView.as_view(), name='chooselocation'),
 ]
