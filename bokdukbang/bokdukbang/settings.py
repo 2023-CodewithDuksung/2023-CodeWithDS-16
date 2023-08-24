@@ -78,7 +78,7 @@ import os
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": "bokdukbang01",
+        "NAME": "bokdukbang",
         "USER": "root",
         "PASSWORD": "0000",
         "HOST": "localhost",
