@@ -1,21 +1,39 @@
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">로그인</button>
-</form>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+ 
+        <link rel="stylesheet" href="styles04.css"> 
+        <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+       
+        <title>로그인</title>
+    </head>
 
-{% if form.errors %}
-<div class="alert alert-danger">
-    <ul>
-        {% for field in form %}
-            {% for error in field.errors %}
-                <li>{{ error }}</li>
-            {% endfor %}
-        {% endfor %}
+        <body>
+            <div class="container">
+                <div class="logo">
+                    <img src="authentication/img/복덕방.svg" alt="Logo">
+                </div>
 
-        {% for error in form.non_field_errors %}
-            <li>{{ error }}</li>
-        {% endfor %}
-    </ul>
-</div>
-{% endif %}
+                <h2>Login</h2>
+            
+                <form id="login-form" action="#" method="post">
+                    <div class="form-group">
+                       <input type="text" id="useremail" name="useremail" placeholder="이메일" required/>
+                    </div>
+            
+                    <div class="form-group">
+                        <input type="password" id="password" name ="password" placeholder="비밀번호" required/>
+                    </div>
+            
+                    <button type = "submit" class = "btn-login">로그인</button>
+            
+                 </form> 
+                 <div style="font-size: 13px; margin-top: 10px; width:1000px">
+                    <span >회원가입</span>
+                    <span style="margin-left: 120px;">아이디 찾기 | 비밀번호 찾기</span>
+                </div>
+            </div> 
+
+    </body>
+</html>
